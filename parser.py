@@ -1,4 +1,4 @@
-import yaml
+import os
 import requests
 from lxml import html
 import re
@@ -8,7 +8,11 @@ from pymongo import MongoClient
 import schedule
 import time
 
-auth = yaml.safe_load(open("auth.yml"))
+auth = {
+    "username": os.environ.get("EPSI_USERNAME"),
+    "password": os.environ.get("EPSI_PASSWORD"),
+    "database_url": os.environ.get("DATABASE_URL")
+}
 
 days = [ "103.1200", "122.5200", "141.9200", "161.3200", "180.7200" ]
 
