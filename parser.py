@@ -60,7 +60,7 @@ def parse_datetime(case, year, week_number, time):
     case_matcher = re.search(r'.*left:([0-9\.]*)', case.xpath("./@style")[0])
     day = days.index(case_matcher.group(1)) + 1
 
-    return datetime.datetime.strptime('%s-%s-%s-%s' % (year, week_number, day, time), "%Y-%W-%w-%H:%M")
+    return datetime.datetime.strptime('%s-%s-%s-%s' % (year, week_number - 1, day, time), "%Y-%W-%w-%H:%M")
 
 def job():
     print("Starting job...")
