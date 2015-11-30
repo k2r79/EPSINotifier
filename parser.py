@@ -67,7 +67,7 @@ def job():
 
     mongo_cours.remove()
 
-    for cours in parse_schedule(2015, 48):
+    for cours in parse_schedule(datetime.date.today().year, datetime.date.today().isocalendar()[1]):
         print(cours.__dict__)
         mongo_cours.insert(cours.__dict__)
 
