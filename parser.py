@@ -5,6 +5,8 @@ import re
 import datetime
 from Cours import Cours
 from pymongo import MongoClient
+import schedule
+import time
 
 auth = yaml.safe_load(open("auth.yml"))
 
@@ -56,12 +58,26 @@ def parse_datetime(case, year, week_number, time):
 
     return datetime.datetime.strptime('%s-%s-%s-%s' % (year, week_number, day, time), "%Y-%W-%w-%H:%M")
 
-mongo_client = MongoClient(auth["database_url"])
-mongo_db = mongo_client["cours"]
-mongo_cours = mongo_db["planning"]
+def job():
+    print("Starting job...")
 
-for cours in parse_schedule(2015, 48):
-    print(cours.__dict__)
-    #mongo_cours.insert(cours.__dict__)
+    mongo_client = MongoClient(auth["database_url"])
+    mongo_db = mongo_client["cours"]
+    mongo_cours = mongo_db["planning"]
 
-print("Schedule parsed and inserted !")
+    mongo_cours.remove()
+
+    for cours in parse_schedule(datetime.date.today().year, datetime.date.today().isocalendar()[1]):
+        print(cours.__dict__)
+        mongo_cours.insert(cours.__dict__)
+
+    print("Schedule parsed and inserted !")
+
+    mongo_client.close()
+
+schedule.every().hour.do(job)
+job()
+
+while 1:
+    schedule.run_pending()
+    time.sleep(3500)
