@@ -37,7 +37,7 @@ def parse_schedule(year, week_number):
     date_string = "%d-W%d" % (year, week_number)
     start_date = datetime.datetime.strptime(date_string + '-0', "%Y-W%W-%w")
 
-    planning_url = "http://ecampusbordeaux.epsi.fr/emploi_du_temps?date=%s" % start_date.strftime("%d/%m/%Y")
+    planning_url = "http://ecampusbordeaux.epsi.fr/emploi_du_temps?date=%s" % start_date.strftime("%m/%d/%Y")
     print("Récupération de l'URL : %s" % planning_url)
     schedule_request = auth_session.get(planning_url)
     schedule_tree = html.fromstring(schedule_request.content)
