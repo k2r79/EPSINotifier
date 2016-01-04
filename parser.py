@@ -30,7 +30,9 @@ def parse_schedule(year, week_number):
         "submit": "Se connecter"
     })
 
-    schedule_request = auth_session.get("http://ecampusbordeaux.epsi.fr/emploi_du_temps")
+    date_string = "%d-W%d" % (year, week_number)
+    start_date = datetime.datetime.strptime(date_string + '-0', "%Y-W%W-%w")
+    schedule_request = auth_session.get("http://ecampusbordeaux.epsi.fr/emploi_du_temps?date=%s" % start_date.strftime("%d/%m/%Y"))
     schedule_tree = html.fromstring(schedule_request.content)
 
     cours = []
