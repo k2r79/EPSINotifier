@@ -33,6 +33,7 @@ def parse_schedule(year, week_number):
         "submit": "Se connecter"
     })
 
+    print("Analyse de la semaine %d de l'année %s" % (week_number, year))
     date_string = "%d-W%d" % (year, week_number)
     start_date = datetime.datetime.strptime(date_string + '-0', "%Y-W%W-%w")
 
