@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 class Cours:
     def __init__(self, matiere, prof, horaires, salle):
         self.matiere = matiere
